@@ -15,7 +15,7 @@ This code use backtracking algorithm for maze generation to backtrack the curren
 
 -**Run the code**
 Open the command prompt in the code folder and run
-```python ./maze.py```
+```python ./gui.py```
 -Input the desired number of rows and columns in maze
 -Hit the create button
 -A maze will be created in the project folder as maze.png
