@@ -4,25 +4,8 @@ from random import choice, randint
 from tkinter import *
 from tkinter.messagebox import showinfo, showerror
 
-
-class Block:
-    def __init__(self, row, columm):
-        self.row = row
-        self.column = columm
-        self.visited = False
-        self.walls = {'top':True, 'bottom':True, 'left':True, 'right':True}
-
-    def  get_pos(self):
-        return self.row, self.column
-    
-    def has_visited(self):
-        return self.visited
-
-    def has_wall(self, place):
-        return self.walls.get(place)
-    
-    def remove_wall(self, place):
-        self.walls.update({place: False})
+from block import Block
+from create_image import CreateImage
 
 class MazeCreator:
     def __init__(self, rows: int, columns : int):
@@ -30,7 +13,7 @@ class MazeCreator:
         self.columns = columns
 
         self.__setup()
-        self.__create_image()
+        CreateImage(self.grid)
 
     def __setup(self) -> None:
         self.grid = []
@@ -123,40 +106,6 @@ class MazeCreator:
 
         start_block.remove_wall('left')
         end_block.remove_wall('right')
-
-    def __create_image(self):
-        grid_block = 20
-        line_width = 2
-
-        image_width = self.columns * grid_block + line_width
-        image_height = self.rows * grid_block + line_width
-        image = PIL.Image.new("RGB", (image_width, image_height))
-
-        draw = ImageDraw.Draw(image)
-
-        for row, block_row in enumerate(self.grid):
-            for column, block in enumerate(block_row):
-                top_left = ( column*grid_block, row*grid_block )
-                top_right = ( (column + 1)*grid_block, row*grid_block )
-                bottom_right = ( (column + 1) *grid_block, (row + 1)*grid_block)
-                bottom_left = ( column*grid_block, (row + 1)*grid_block )
-
-                if block.has_wall('left'):
-                    coords = ( top_left, bottom_left )
-                    draw.line(coords, fill=(255,0,0), width=line_width)
-
-                if block.has_wall('right'):
-                    coords = ( top_right, bottom_right )
-                    draw.line(coords, fill=(255,0,0), width=line_width)
-
-                if block.has_wall('top'):
-                    coords = ( top_left, top_right )
-                    draw.line(coords, fill=(255,0,0), width=line_width)
-
-                if block.has_wall('bottom'):
-                    coords = ( bottom_left, bottom_right )
-                    draw.line(coords, fill=(255,0,0), width=line_width)
-        image.save('maze.png', 'PNG')
 
 
 class GUI(Tk):
