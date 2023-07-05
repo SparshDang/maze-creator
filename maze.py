@@ -1,8 +1,6 @@
-from PIL import ImageDraw
-import PIL.Image
+
 from random import choice, randint
-from tkinter import *
-from tkinter.messagebox import showinfo, showerror
+
 
 from block import Block
 from create_image import CreateImage
@@ -106,54 +104,3 @@ class MazeCreator:
 
         start_block.remove_wall('left')
         end_block.remove_wall('right')
-
-
-class GUI(Tk):
-    def __init__(self):
-        super().__init__()
-        self.title('Maze Creator')
-        self.geometry('500x300')
-
-        self.rows = IntVar() 
-        self.columns = IntVar() 
-
-        self.__place_title_label()
-        self.__create_inputs()
-        self.__create_maze_button()
-        self.mainloop()
-
-    def __place_title_label(self):
-        label = Label(self, text='Welcome to the Maze Generator!', font=('Arial Bold',18))
-        label.pack()
-
-    def __create_inputs(self):
-        Label(self, text='Rows', font=('Arial',18)).pack()
-        Entry(self, textvariable=self.rows , font=('Arial Bold',18)).pack(padx=10, pady=10)
-
-        Label(self, text='Columns', font=('Arial',18)).pack()
-        Entry(self, textvariable=self.columns, font=('Arial Bold',18)).pack(padx=10, pady=10)
-
-    def __create_maze_button(self):
-        Button(self, text='Create', font=('Arial Bold', 18),command=self.__create_maze ).pack(pady=10)
-
-    def __create_maze(self):
-        try:
-            rows = self.rows.get()
-            columns = self.columns.get()
-
-            if rows and columns:
-                MazeCreator(rows, columns)
-                showinfo('Maze Created', 'Maze Created')
-            else:
-                    showerror('Invalid', 'Invalid row or column')
-        except:
-            showerror('Invalid', 'Invalid row or column')
-
-        self.rows.set(0)
-        self.columns.set(0)
-
-if __name__ == '__main__':
-    GUI()
-    # rows = int(input('Enter number of rows in maze: '))
-    # columns = int(input('Enter number of columns in maze: '))
-    # MazeCreator(10,10)
